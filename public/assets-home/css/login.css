@@ -1,0 +1,544 @@
+*,
+*::before,
+*::after {
+    box-sizing: inherit
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box
+}
+
+.login-container {
+    height: 100vh
+}
+
+.grid {
+    display: grid;
+    width: 100%;
+    height: 100vh;
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr))
+}
+
+.left {
+    grid-column: 1/span 6
+}
+
+.right {
+    grid-column: 7/span 5
+}
+
+.login-header {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.logo {
+    margin-left: 4rem;
+    background: url(../img/logo.svg) center no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 80%;
+    width: 70px
+}
+
+.dark-text {
+    color: #044144 !important
+}
+
+.home {
+    cursor: pointer;
+    padding-right: 4rem;
+    font-family: Lato, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-stretch: normal;
+    text-decoration: none;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #3a948a
+}
+
+.home:hover {
+    color: #044144
+}
+
+.loginIn {
+    color: #044144;
+    text-decoration: none
+}
+
+.loginIn:hover {
+    color: #3a948a
+}
+
+.first-header {
+    font-family: PTSerif, serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.4;
+    letter-spacing: normal;
+    color: #044144
+}
+
+.login-form {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: calc(100% - 90px)
+}
+
+.second-header {
+    font-family: Lato, sans-serif;
+    font-size: 3.4rem;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.29;
+    letter-spacing: normal;
+    color: #813bab
+}
+
+.input {
+    width: 100%;
+    height: 42px;
+    border-radius: 3px;
+    border: solid 1px #dadada;
+    text-indent: 40px
+}
+
+.inputContainer {
+    position: relative;
+    width: 100%
+}
+
+.margin-t-30 {
+    margin-top: 30px
+}
+
+.margin-t-20 {
+    margin-top: 20px
+}
+
+.policy-1 {
+    margin-top: 20px !important
+}
+
+.policy {
+    margin-top: 10px !important
+}
+
+.user-name {
+    width: 15px;
+    height: 15px;
+    background: url(../img/icon-username.svg) center no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    left: 20px;
+    top: 10px
+}
+
+.user-name i {
+    font-size: 12px;
+    color: #bdbdbb
+}
+
+.password {
+    width: 15px;
+    height: 15px;
+    background: url(../img/icon-password.svg) center no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    left: 20px;
+    top: 14px
+}
+
+.password-mask {
+    width: 15px;
+    height: 15px;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    right: 20px;
+    top: 14px
+}
+
+.right {
+    background: linear-gradient(to right, #1ea1c4 0%, #0800df 100%)
+}
+
+@media(max-width:991px) {
+    .right {
+        order: -1;
+        margin-top: 100px
+    }
+
+    .hello-logo {
+        margin-top: 20px
+    }
+
+    .sign-up-img {
+        width: 70%
+    }
+}
+
+.hello {
+    padding: 20px
+}
+
+.sign-up-img {
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1)
+}
+
+.password-mask-url {
+    background: url(../img/icon-unmask.svg) center no-repeat
+}
+
+.password-unmask-url {
+    background: url(../img/icon-mask.svg) center no-repeat
+}
+
+.buttons {
+    margin-top: 1.3rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.3rem
+}
+
+.login {
+    width: 48%;
+    flex: 1 0 auto;
+    height: 38px;
+    border-radius: 3px;
+    background-color: #813bab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Lato, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff
+}
+
+.spacer {
+    width: 10px
+}
+
+.register {
+    width: 48%;
+    height: 38px;
+    border-radius: 3px;
+    border: solid 2px #044144;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #3a948a
+}
+
+.form-footer {
+    padding-bottom: 4rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.remember {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Lato, sans-serif;
+    font-stretch: normal;
+    text-decoration: none;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #3a948a
+}
+
+.forgot-password {
+    cursor: pointer;
+    font-family: Lato, sans-serif;
+    font-stretch: normal;
+    text-decoration: none;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #3a948a
+}
+
+.right {
+    min-height: 400px;
+    position: relative;
+    background-size: cover;
+    background-position: 30% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative
+}
+
+.bullets {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.active {
+    background: #fff
+}
+
+.bullet {
+    margin-left: 3px;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #fff;
+    border-radius: 100px
+}
+
+a.pp-tos {
+    color: inherit;
+    text-decoration: none
+}
+
+.hidden {
+    display: none
+}
+
+.support-mail:link {
+    font-family: PTSerif, serif;
+    font-size: 1.5rem;
+    line-height: 2.4;
+    color: #122852;
+    text-decoration: underline
+}
+
+.opt-out-modal {
+    height: auto;
+    display: none;
+    width: 80%;
+    max-width: 640px;
+    border-radius: 3px
+}
+
+.opt-out-modal-heading {
+    font-weight: 900;
+    font-size: 3.4rem
+}
+
+.opt-out-modal-text {
+    padding-left: 0;
+    font-family: PTSerif, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
+    color: #122852;
+    font-weight: 400;
+    margin-top: 40px
+}
+
+.opt-out-modal-button {
+    margin: 0 .5rem;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Lato, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    background: #122852;
+    padding: 15px 50px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    margin-top: 30px
+}
+
+.continue-to-site-button {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Lato, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    background: #122852;
+    padding: 15px 50px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    margin-top: 30px
+}
+
+.modal-button-container {
+    display: flex;
+    justify-content: center
+}
+
+a.opt-out-button {
+    text-decoration: underline;
+    font-weight: 700;
+    color: #122852;
+    cursor: pointer
+}
+
+.phone-validation-error {
+    color: red;
+    padding-top: 10px;
+    font-size: 10px
+}
+
+.explainer-text {
+    padding-top: 10px;
+    font-family: Lato, sans-serif;
+    color: #122852;
+    font-size: 12px
+}
+
+.opt-out-modal-heading {
+    font-family: Lato, sans-serif;
+    font-size: 3.4rem;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.76;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ff0100;
+    padding-top: 45px
+}
+
+.modal-text-container {
+    font-family: Lato, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #122852
+}
+
+@media all and (max-width:600px) {
+    .opt-out-modal {
+        width: 100% !important
+    }
+
+    .opt-out-modal-heading {
+        font-size: 4.2rem
+    }
+
+    .opt-out-modal-text {
+        margin-top: 10px
+    }
+
+    .modal-text-container {
+        font-size: 1.5rem
+    }
+
+    .modal-button-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center
+    }
+
+    .opt-out-modal-button {
+        margin-bottom: 10px;
+        margin-top: 10px;
+        width: 220px;
+        font-size: 1.5rem
+    }
+}
+
+a {
+    text-decoration: none
+}
+
+.header a {
+    color: #333
+}
+
+.glide__arrow {
+    border: none !important;
+    box-shadow: none !important
+}
+
+.forward,
+.back {
+    width: 40px !important
+}
+
+.lifestyle-section a:hover {
+    background-color: #044144
+}
+
+a:hover {
+    color: #044144 !important;
+    text-decoration: none !important
+}
+
+.info-section .header,
+.categories .header {
+    box-shadow: none !important
+}
+
+@media all and (max-width:700px) {
+    .right {
+        grid-column: 1/-1;
+        grid-row: 1
+    }
+
+    .left {
+        grid-row: 2;
+        grid-column: 1/-1
+    }
+
+    .login-form {
+        width: 80%
+    }
+}

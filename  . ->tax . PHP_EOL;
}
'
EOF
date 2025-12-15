@@ -1,0 +1,29 @@
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-161-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Nov 14 17:06:46 IST 2025
+
+  System load:  0.04               Processes:             205
+  Usage of /:   7.3% of 387.48GB   Users logged in:       0
+  Memory usage: 7%                 IPv4 address for eth0: 185.199.53.121
+  Swap usage:   0%                 IPv6 address for eth0: 2a02:4780:12:2363::1
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+14 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '24.04.3 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+1 updates could not be installed automatically. For more details,
+see /var/log/unattended-upgrades/unattended-upgrades.log
+

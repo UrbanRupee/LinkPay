@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ setting('app_name') }} - Register</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{setting('app_name')}} is a digital marketing company">
+    <meta name="title" Content="{{setting('app_name')}} - Home">
+    <meta name="description"
+        content="{{setting('app_name')}} is a successful multilevel marketing company. Lorem Ipsum is simply dummied text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularly raised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#039;Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#039;lorem Ipsum will uncover many websites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humor and the like).">
+
+    <meta name="keywords" content="{{setting('app_name')}},timeup,blog,manage,mlm,mlmlab,binary mlm,php mlm">
+    <meta name="google-site-verification" content="5RX12CwxHKIfmmFa_hvPBYJc9hQr8QFQsLlREz-_uMg">
+    <meta name="robots" content="noindex,nofollow">
+    <!-- Favicon -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="{{setting('app_name')}} - Home">
+    <meta name="title" Content="{{setting('app_name')}} - Home">
+    <meta name="description"
+        content="{{setting('app_name')}} is a successful multilevel marketing company. Lorem Ipsum is simply dummied text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularly raised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#039;Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#039;lorem Ipsum will uncover many websites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humor and the like).">
+
+    <meta name="keywords" content="timeup,blog,manage,mlm,mlmlab,binary mlm,php mlm">
+    <meta name="google-site-verification" content="5RX12CwxHKIfmmFa_hvPBYJc9hQr8QFQsLlREz-_uMg">
+    <meta name="robots" content="noindex,nofollow">
+    <!-- Favicon -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="{{setting('app_name')}} - Home">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/logo/logo.png">
+    <link rel="stylesheet" href="/assets/css/login.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/admin_assets/vendors/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            label.error{
+                color:red;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-box-1"></div>
+            <div class="loader-box-2"></div>
+        </div>
+    </div>
+    <div class="login-container">
+        <div class="row grid">
+            <div class="col-lg-6 left">
+                <div class="login-header">
+                    <div class="logo"></div>
+                    <a href="{{ url('/') }}" class="home">Home</a>
+                </div>
+                <form class="login-form" method="post"
+                    id="register_form">
+                    @csrf
+                    <div class="first-header">Become part of the {{setting('app_name')}} Family.</div>
+                    <div class="second-header">Register</div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <input type="text" name="sponserid" id="sponserid" value="{{isset($_GET['refferal']) ? $_GET['refferal'] : ''}}"
+                                    class="input form-control" placeholder="Referral ID" autofocus="autofocus" required/>
+                                <div class="user-name">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="reg_error">
+                                <p id="username_container"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <input type="text" name="name" id="name" class="input form-control" placeholder="Full Name" required/>
+                                <div class="user-name">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <input type="password" name="password" id="password" class="input form-control"
+                                    placeholder="Password" required/>
+                                <div class="user-name">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <input type="password" name="repassword" id="repassword"
+                                    class="input form-control" placeholder="Confirm Password" required/>
+                                <div class="user-name">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <div class="reg_error">
+                                    <div id="reg_repassword_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <input type="text" name="email" id="email" class="input form-control"
+                                    value="" placeholder="Email ID" required/>
+                                <div class="user-name">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <div class="reg_error">
+                                    <div id="reg_email_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <input type="text" name="mobile" id="mobile" class="input form-control"
+                                    value="" placeholder="Mobile Number" required/>
+                                <div class="user-name">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <textarea name="address" id="address" class="input form-control" placeholder="Address" required></textarea>
+                                <div class="user-name">
+                                    <i class="fa fa-address-card"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="inputContainer margin-t-30">
+                                <input type="file" name="image" id="image" class="input form-control" required/>
+                                <div class="user-name">
+                                    <i class="fa fa-image"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inputContainer margin-t-30 policy-1">
+                            <input type="checkbox" id="terms" name="terms" value="1"
+                                style="height: 15px" accept="image/*" required/>
+                            I accept the Terms and Conditions
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button type="submit" class="login"
+                            style="margin-bottom: 10px">
+                            Sign Up
+                        </button>
+                    </div>
+                    <div class="" style="text-align: center;width: 100%;margin-bottom: 20px;font-size: 1rem;">
+                        Already have an account?
+                        <a href="{{url('/login')}}" class="loginIn">Login</a>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 right">
+                <div class="hello-logo" style="display: flex; justify-content: center">
+                    <img src="{{ asset('assets/images/logo/logo.png') }}" width="60%" />
+                </div>
+                <div class="hello" style="display: flex; justify-content: center">
+                    <img src="https://nisp.mic.gov.in/assets/iaProfile/img/login-image.png" class="sign-up-img"
+                        width="100%" />
+                </div>
+            </div>
+        </div>
+        <!-- Main JS -->
+        <script src="/admin_assets/js/main.js"></script>
+        <script src="/admin_assets/js/sweet-alert.js"></script>
+        <script src="/admin_assets/vendors/sweetalert2/sweetalert2.min.js"></script>
+        <script src="/admin_assets/js/jquery.validate.min.js"></script>
+        <script>
+            $("#sponserid").on('blur', function() {
+            let idcon = this;
+            $.ajax({
+                type: "post",
+                url: "{{ url('/api/usercheck') }}",
+                data: {
+                    'userid': $(this).val()
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.status == 1) {
+                        $("#username_container").html(response.data);
+                    } else {
+                        $(idcon).val('');
+                        $("#username_container").html(response.data);
+                    }
+                },
+                error: function(e) {}
+            });
+        });
+        @if (isset($_GET['refferal']) && $_GET['refferal'] != '')
+            let idcon = $("#sponserid");
+            idcon.attr('readonly',true);
+            $.ajax({
+                type: "post",
+                url: "{{ url('/api/usercheck') }}",
+                data: {
+                    'userid': '{{$_GET['refferal']}}'
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.status == 1) {
+                        $("#username_container").html(response.data);
+                    } else {
+                        idcon.val('');
+                        $("#username_container").html(response.data);
+                    }
+                },
+                error: function(e) {}
+            });
+        @endif
+        formasync('register_form');
+        $("#register_form").validate({
+            submitHandler: function(form) {
+                apex("POST", "{{ url('/api/register') }}", new FormData(form), form,
+                    "/registration-approve",
+                    "#");
+            }
+        });
+        </script>
+</body>
+
+</html>

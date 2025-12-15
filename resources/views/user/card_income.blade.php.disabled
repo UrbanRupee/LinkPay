@@ -1,0 +1,577 @@
+@extends('user.layout.NewUser')
+@section('css')
+<style>
+    /* User Card Transactions Styles */
+    .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: #1565c0;
+        border-bottom: none;
+        padding: 1.5rem 2rem;
+        border-radius: 12px 12px 0 0;
+    }
+    
+    .card-header h4 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.4rem;
+    }
+    
+    .card-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.8;
+    }
+    
+    /* Summary Cards */
+    .summary-cards {
+        margin-bottom: 2rem;
+    }
+    
+    .summary-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        border-left: 4px solid;
+        transition: transform 0.2s ease;
+        margin-bottom: 1rem;
+        height: 100%;
+    }
+    
+    .summary-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+    
+    .summary-card.bg-primary {
+        border-left-color: #2196f3;
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    }
+    
+    .summary-card.bg-success {
+        border-left-color: #4caf50;
+        background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+    }
+    
+    .summary-card.bg-warning {
+        border-left-color: #ff9800;
+        background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    }
+    
+    .summary-card.bg-info {
+        border-left-color: #00bcd4;
+        background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+    }
+    
+    .summary-card h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: #1565c0;
+    }
+    
+    .summary-card p {
+        margin: 0.5rem 0 0 0;
+        color: #424242;
+        font-weight: 600;
+    }
+    
+    .summary-card i {
+        font-size: 2.5rem;
+        opacity: 0.8;
+        color: #1565c0;
+    }
+    
+    /* Table Styles */
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin-top: 1rem;
+    }
+    
+    .table-header-section {
+        background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+        padding: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .table-header-section h6 {
+        margin: 0;
+        color: #424242;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+    
+    .table thead th {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: #1565c0;
+        font-weight: 700;
+        border: none;
+        padding: 1.2rem 1rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-align: center;
+    }
+    
+    .table tbody td {
+        padding: 1rem 0.75rem;
+        border-bottom: 1px solid #f5f5f5;
+        vertical-align: middle;
+        text-align: center;
+    }
+    
+    .table tbody tr:hover {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    
+    /* Status Badges */
+    .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 100px;
+        text-align: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    
+    .status-badge.success {
+        background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+        color: white;
+    }
+    
+    .status-badge.pending {
+        background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
+        color: white;
+    }
+    
+    .status-badge.failed {
+        background: linear-gradient(135deg, #f44336 0%, #ef5350 100%);
+        color: white;
+    }
+    
+    /* Currency Badges */
+    .currency .badge {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: #1565c0;
+        font-weight: 600;
+        padding: 0.5rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(21, 101, 192, 0.2);
+    }
+    
+    /* Amount Styling */
+    .amount-credited {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #4caf50;
+    }
+    
+    .fees {
+        font-weight: 600;
+        color: #ff9800;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: #6c757d;
+    }
+    
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+        color: #1565c0;
+    }
+    
+    .empty-state h5 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #424242;
+    }
+    
+    .empty-state p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: #6c757d;
+    }
+    
+    /* Pagination */
+    .pagination {
+        justify-content: center;
+        margin-top: 2rem;
+    }
+    
+    .page-link {
+        border-radius: 8px;
+        margin: 0 0.25rem;
+        border: none;
+        color: #2196f3;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    
+    .page-link:hover {
+        background: #2196f3;
+        color: white;
+        transform: translateY(-1px);
+    }
+    
+    .page-item.active .page-link {
+        background: #2196f3;
+        border-color: #2196f3;
+    }
+</style>
+@endsection
+
+@section('content')
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-credit-card mr-2"></i>My Card Transactions</h4>
+                    <p>View all your card payment transactions and analytics</p>
+                </div>
+                <div class="card-body">
+                    @if(isset($cardTransactions) && count($cardTransactions) > 0)
+                        <!-- Summary Cards -->
+                        <div class="summary-cards">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="summary-card bg-primary">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h3>{{ count($cardTransactions) }}</h3>
+                                                <p>Total Transactions</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-credit-card"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="summary-card bg-success">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h3>{{ $cardTransactions->where('status', 'success')->count() }}</h3>
+                                                <p>Successful</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="summary-card bg-warning">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h3>{{ $cardTransactions->where('status', 'pending')->count() }}</h3>
+                                                <p>Pending</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-clock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="summary-card bg-info">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h3>{{ $cardTransactions->where('transaction_type', '3D')->count() }}</h3>
+                                                <p>3D Secure</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-shield-alt"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Transactions Table -->
+                        <div class="table-container">
+                            <div class="table-header-section">
+                                <h6><i class="fas fa-list mr-2"></i>Transaction Records</h6>
+                                <p class="text-muted mb-0">Your card transaction history</p>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Reference</th>
+                                            <th>Order ID</th>
+                                            <th>Amount</th>
+                                            <th>Currency</th>
+                                            <th>Status</th>
+                                            <th>Type</th>
+                                            <th>Fees</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($cardTransactions as $item)
+                                            <tr>
+                                                <td>{{ $item->id }}</td>
+                                                <td>
+                                                    <span class="transaction-id">{{$item->reference}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="order-id">{{$item->orderid}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="amount-credited">
+                                                        @php
+                                                            $symbol = '';
+                                                            switch(strtoupper($item->currency)) {
+                                                                case 'USD': $symbol = '$'; break;
+                                                                case 'EUR': $symbol = '€'; break;
+                                                                case 'GBP': $symbol = '£'; break;
+                                                                case 'INR': $symbol = '₹'; break;
+                                                                case 'JPY': $symbol = '¥'; break;
+                                                                case 'CAD': $symbol = 'C$'; break;
+                                                                case 'AUD': $symbol = 'A$'; break;
+                                                                case 'CHF': $symbol = 'CHF'; break;
+                                                                case 'CNY': $symbol = '¥'; break;
+                                                                case 'SGD': $symbol = 'S$'; break;
+                                                                case 'HKD': $symbol = 'HK$'; break;
+                                                                case 'KRW': $symbol = '₩'; break;
+                                                                case 'BRL': $symbol = 'R$'; break;
+                                                                case 'MXN': $symbol = '$'; break;
+                                                                case 'RUB': $symbol = '₽'; break;
+                                                                case 'ZAR': $symbol = 'R'; break;
+                                                                case 'SEK': $symbol = 'kr'; break;
+                                                                case 'NOK': $symbol = 'kr'; break;
+                                                                case 'DKK': $symbol = 'kr'; break;
+                                                                case 'TRY': $symbol = '₺'; break;
+                                                                case 'ILS': $symbol = '₪'; break;
+                                                                case 'AED': $symbol = 'د.إ'; break;
+                                                                case 'SAR': $symbol = 'ر.س'; break;
+                                                                case 'QAR': $symbol = 'ر.ق'; break;
+                                                                case 'KWD': $symbol = 'د.ك'; break;
+                                                                case 'BHD': $symbol = 'د.ب'; break;
+                                                                case 'OMR': $symbol = 'ر.ع.'; break;
+                                                                case 'JOD': $symbol = 'د.أ'; break;
+                                                                case 'LBP': $symbol = 'ل.ل'; break;
+                                                                case 'EGP': $symbol = 'ج.م'; break;
+                                                                case 'NGN': $symbol = '₦'; break;
+                                                                case 'GHS': $symbol = '₵'; break;
+                                                                case 'KES': $symbol = 'KSh'; break;
+                                                                case 'UGX': $symbol = 'USh'; break;
+                                                                case 'TZS': $symbol = 'TSh'; break;
+                                                                case 'ZMW': $symbol = 'ZK'; break;
+                                                                case 'NAD': $symbol = 'N$'; break;
+                                                                case 'BWP': $symbol = 'P'; break;
+                                                                case 'MWK': $symbol = 'MK'; break;
+                                                                case 'MUR': $symbol = '₨'; break;
+                                                                case 'SCR': $symbol = '₨'; break;
+                                                                case 'SZL': $symbol = 'E'; break;
+                                                                case 'LSL': $symbol = 'L'; break;
+                                                                case 'MAD': $symbol = 'د.م.'; break;
+                                                                case 'TND': $symbol = 'د.ت'; break;
+                                                                case 'LYD': $symbol = 'ل.د'; break;
+                                                                case 'DZD': $symbol = 'د.ج'; break;
+                                                                case 'XOF': $symbol = 'CFA'; break;
+                                                                case 'XAF': $symbol = 'FCFA'; break;
+                                                                case 'XPF': $symbol = 'CFP'; break;
+                                                                case 'CLP': $symbol = '$'; break;
+                                                                case 'PEN': $symbol = 'S/'; break;
+                                                                case 'COP': $symbol = '$'; break;
+                                                                case 'ARS': $symbol = '$'; break;
+                                                                case 'UYU': $symbol = '$'; break;
+                                                                case 'PYG': $symbol = '₲'; break;
+                                                                case 'BOB': $symbol = 'Bs'; break;
+                                                                case 'VND': $symbol = '₫'; break;
+                                                                case 'THB': $symbol = '฿'; break;
+                                                                case 'MYR': $symbol = 'RM'; break;
+                                                                case 'IDR': $symbol = 'Rp'; break;
+                                                                case 'PHP': $symbol = '₱'; break;
+                                                                case 'BDT': $symbol = '৳'; break;
+                                                                case 'LKR': $symbol = 'Rs'; break;
+                                                                case 'NPR': $symbol = '₨'; break;
+                                                                case 'PKR': $symbol = '₨'; break;
+                                                                case 'AFN': $symbol = '؋'; break;
+                                                                case 'IRR': $symbol = '﷼'; break;
+                                                                case 'IQD': $symbol = 'ع.د'; break;
+                                                                default: $symbol = $item->currency;
+                                                            }
+                                                            $decimals = in_array(strtoupper($item->currency), ['JPY', 'KRW', 'VND', 'XOF', 'XAF', 'XPF']) ? 0 : 2;
+                                                            echo '+' . $symbol . ' ' . number_format(floatval($item->amount), $decimals);
+                                                        @endphp
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="currency">
+                                                        <span class="badge badge-light">{{$item->currency}}</span>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    @if($item->status == 'success')
+                                                        <span class="status-badge success">
+                                                            <i class="fas fa-check-circle"></i>Success
+                                                        </span>
+                                                    @elseif($item->status == 'pending')
+                                                        <span class="status-badge pending">
+                                                            <i class="fas fa-clock"></i>Pending
+                                                        </span>
+                                                    @else
+                                                        <span class="status-badge failed">
+                                                            <i class="fas fa-times-circle"></i>Failed
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($item->transaction_type == '3D')
+                                                        <span class="badge bg-info">3D Secure</span>
+                                                    @else
+                                                        <span class="badge bg-secondary">2D</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <span class="fees">
+                                                        @php
+                                                            $symbol = '';
+                                                            switch(strtoupper($item->currency)) {
+                                                                case 'USD': $symbol = '$'; break;
+                                                                case 'EUR': $symbol = '€'; break;
+                                                                case 'GBP': $symbol = '£'; break;
+                                                                case 'INR': $symbol = '₹'; break;
+                                                                case 'JPY': $symbol = '¥'; break;
+                                                                case 'CAD': $symbol = 'C$'; break;
+                                                                case 'AUD': $symbol = 'A$'; break;
+                                                                case 'CHF': $symbol = 'CHF'; break;
+                                                                case 'CNY': $symbol = '¥'; break;
+                                                                case 'SGD': $symbol = 'S$'; break;
+                                                                case 'HKD': $symbol = 'HK$'; break;
+                                                                case 'KRW': $symbol = '₩'; break;
+                                                                case 'BRL': $symbol = 'R$'; break;
+                                                                case 'MXN': $symbol = '$'; break;
+                                                                case 'RUB': $symbol = '₽'; break;
+                                                                case 'ZAR': $symbol = 'R'; break;
+                                                                case 'SEK': $symbol = 'kr'; break;
+                                                                case 'NOK': $symbol = 'kr'; break;
+                                                                case 'DKK': $symbol = 'kr'; break;
+                                                                case 'TRY': $symbol = '₺'; break;
+                                                                case 'ILS': $symbol = '₪'; break;
+                                                                case 'AED': $symbol = 'د.إ'; break;
+                                                                case 'SAR': $symbol = 'ر.س'; break;
+                                                                case 'QAR': $symbol = 'ر.ق'; break;
+                                                                case 'KWD': $symbol = 'د.ك'; break;
+                                                                case 'BHD': $symbol = 'د.ب'; break;
+                                                                case 'OMR': $symbol = 'ر.ع.'; break;
+                                                                case 'JOD': $symbol = 'د.أ'; break;
+                                                                case 'LBP': $symbol = 'ل.ل'; break;
+                                                                case 'EGP': $symbol = 'ج.م'; break;
+                                                                case 'NGN': $symbol = '₦'; break;
+                                                                case 'GHS': $symbol = '₵'; break;
+                                                                case 'KES': $symbol = 'KSh'; break;
+                                                                case 'UGX': $symbol = 'USh'; break;
+                                                                case 'TZS': $symbol = 'TSh'; break;
+                                                                case 'ZMW': $symbol = 'ZK'; break;
+                                                                case 'NAD': $symbol = 'N$'; break;
+                                                                case 'BWP': $symbol = 'P'; break;
+                                                                case 'MWK': $symbol = 'MK'; break;
+                                                                case 'MUR': $symbol = '₨'; break;
+                                                                case 'SCR': $symbol = '₨'; break;
+                                                                case 'SZL': $symbol = 'E'; break;
+                                                                case 'LSL': $symbol = 'L'; break;
+                                                                case 'MAD': $symbol = 'د.م.'; break;
+                                                                case 'TND': $symbol = 'د.ت'; break;
+                                                                case 'LYD': $symbol = 'ل.د'; break;
+                                                                case 'DZD': $symbol = 'د.ج'; break;
+                                                                case 'XOF': $symbol = 'CFA'; break;
+                                                                case 'XAF': $symbol = 'FCFA'; break;
+                                                                case 'XPF': $symbol = 'CFP'; break;
+                                                                case 'CLP': $symbol = '$'; break;
+                                                                case 'PEN': $symbol = 'S/'; break;
+                                                                case 'COP': $symbol = '$'; break;
+                                                                case 'ARS': $symbol = '$'; break;
+                                                                case 'UYU': $symbol = '$'; break;
+                                                                case 'PYG': $symbol = '₲'; break;
+                                                                case 'BOB': $symbol = 'Bs'; break;
+                                                                case 'VND': $symbol = '₫'; break;
+                                                                case 'THB': $symbol = '฿'; break;
+                                                                case 'MYR': $symbol = 'RM'; break;
+                                                                case 'IDR': $symbol = 'Rp'; break;
+                                                                case 'PHP': $symbol = '₱'; break;
+                                                                case 'BDT': $symbol = '৳'; break;
+                                                                case 'LKR': $symbol = 'Rs'; break;
+                                                                case 'NPR': $symbol = '₨'; break;
+                                                                case 'PKR': $symbol = '₨'; break;
+                                                                case 'AFN': $symbol = '؋'; break;
+                                                                case 'IRR': $symbol = '﷼'; break;
+                                                                case 'IQD': $symbol = 'ع.د'; break;
+                                                                default: $symbol = $item->currency;
+                                                            }
+                                                            $decimals = in_array(strtoupper($item->currency), ['JPY', 'KRW', 'VND', 'XOF', 'XAF', 'XPF']) ? 0 : 2;
+                                                            echo $symbol . ' ' . number_format(floatval($item->user_fees), $decimals);
+                                                        @endphp
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="date-time">
+                                                        <i class="far fa-clock mr-1"></i>
+                                                        {{ dformat($item->created_at,'d-m-Y H:i:s') }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            @if(isset($cardTransactions) && method_exists($cardTransactions, 'links'))
+                                <div class="d-flex justify-content-center mt-4">
+                                    <nav aria-label="Card transactions pagination">
+                                        {{ $cardTransactions->links() }}
+                                    </nav>
+                                </div>
+                            @endif
+                        </div>
+                    @else
+                        <div class="empty-state">
+                            <i class="fas fa-credit-card"></i>
+                            <h5>No Card Transactions Found</h5>
+                            <p>You haven't made any card payments yet.</p>
+                            <div class="mt-3">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    <strong>Tip:</strong> Card transactions will appear here once you start making card payments through the API.
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+

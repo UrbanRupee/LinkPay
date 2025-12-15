@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<?php include 'include/Head.php'; ?>
+    
+    <title>About us - Mother Solution - Mother do all the work</title>
+    
+</head>
+
+<body class="body-wrapper">    
+<?php include 'include/Preloader.php'; ?>
+
+<?php include 'include/Header.php'; ?>
+
+    <div class="page-banner-wrap text-center bg-cover" style="background-image: url('assets/img/page-banner.jpg')">
+        <div class="container">
+            <div class="page-heading text-white">
+                <h1>News Details</h1>
+            </div>
+            <nav>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index">Home</a></li>
+                  <li class="breadcrumb-item"><a href="news">News</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">News Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    
+    <section class="blog-wrapper news-wrapper section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="blog-post-details border-wrap">
+                        <div class="single-blog-post post-details">                            
+                            <div class="post-content">
+                                <div class="post-cat">
+                                    <a href="news">Technology</a>
+                                </div>
+                                <h2>Your Guide to Becoming a Preferred Shipper</h2>
+                                <div class="post-meta">
+                                    <span><i class="fal fa-comments"></i>35 Comments</span>
+                                    <span><i class="fal fa-calendar-alt"></i>24th Jan 2023</span>
+                                </div>
+    
+                                <p>We have a proven record of best result of building and reputable company in the United States. Thousands of successful projects we are one of the most trusted construction companies. We have a proven record of best result of building and reputable company in the United States.</p>
+                                <p>Northern anchovy–bass yellowtail barracuda zander yellowfin grouper gurnard skipjack tuna shark burrowing goby eulachon wobbegong. Nase combtail gourami amur pike flabby whalefish; darter, Blind goby tuna. Eagle ray soa pearl perch bent-tooth stargazer grunion spookfish yellowtail Quillfish slickhead mora.  snake worm mackerel sockeye salmon banjo catfish toadfish sauger four-eyed fish</p>
+                                <img src="assets/img/blog/p4.jpg" alt="">
+                                <h3>An Airborne Crisis on Two Fronts</h3>
+                                <p>This shortage is being seen in both the airline and the cargo industries. With such a small pool of applicants to choose from, these two sectors are battling to get the most qualified available candidates. Many pilots are increasingly being wooed to get behind the controls of passenger planes over cargo flights—frankly, it’s tough to compete with jobs perks like fixed schedules and free flights for your family across the world.</p>
+                                <blockquote>
+                                    Thousands of successful projects we are one of the most trusted construction companies.
+                                </blockquote>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidid unt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute.</p>
+    
+                                <ul class="checked-list mb-3">
+                                    <li>We track every dollar</li>
+                                    <li>We’re an open book</li>
+                                    <li>100% goes to the field</li>
+                                    <li>Received the highest grades</li>
+                                </ul>
+    
+                                <h3>Investing in Freight Broker Training</h3>
+                                <p>Just as we’ve found with the truck driver shortage, the impetus behind skilled labor leaving is many-fold. Demographics play a large role—a massive amount of pilots are expected to hang up their hats in the next few years as they reach the mandatory commercial pilot retirement age of 65. And there’s no large group of applicants sitting waiting to replace them.This is likely because it’s becoming considerably more difficult to obtain a pilot license than it was ten years ago.</p>
+                                <img class="alignleft" src="assets/img/blog/post-inner.jpg" alt="">
+    
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                                
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidid unt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in repreh enderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                            </div>
+                        </div>
+                        <div class="row tag-share-wrap">
+                            <div class="col-lg-8 col-12">
+                                <h4>Releted Tags</h4>
+                                <div class="tagcloud">                                   
+                                    <a href="news-details">logitics</a>
+                                    <a href="news-details">transport</a>
+                                    <a href="news-details">cargo</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 mt-3 mt-lg-0 text-lg-end">
+                                <h4>Social Share</h4>
+                                <div class="social-share">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>                                    
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- comments section wrap start -->
+                        <div class="comments-section-wrap pt-40">
+                            <div class="comments-heading">
+                                <h3>03 Comments</h3>
+                            </div>
+                            <ul class="comments-item-list">
+                                <li class="single-comment-item">
+                                    <div class="author-img">
+                                        <img src="assets/img/blog/author_img.jpg" alt="">
+                                    </div>
+                                    <div class="author-info-comment">
+                                        <div class="info">
+                                            <h5><a href="#">Rosalina Kelian</a></h5>
+                                            <span>19th May 2018</span>
+                                            <a href="#" class="theme-btn minimal-btn"><i class="fal fa-reply"></i>Reply</a>
+                                        </div>
+                                        <div class="comment-text">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Ut enim ad minim veniam, quis nostrud  laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="single-comment-item">
+                                    <div class="author-img">
+                                        <img src="assets/img/blog/author2.jpg" alt="">
+                                    </div>
+                                    <div class="author-info-comment">
+                                        <div class="info">
+                                            <h5><a href="#">Arista Williamson</a></h5>
+                                            <span>21th Feb 2020</span>
+                                            <a href="#" class="theme-btn minimal-btn"><i class="fal fa-reply"></i>Reply</a>
+                                        </div>
+                                        <div class="comment-text">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco nisi ut aliquip ex ea commodo consequat.</p>
+                                        </div>
+                                    </div>
+    
+                                    <ul class="replay-comment">
+                                        <li class="single-comment-item">
+                                            <div class="author-img">
+                                                <img src="assets/img/blog/author3.jpg" alt="">
+                                            </div>
+                                            <div class="author-info-comment">
+                                                <div class="info">
+                                                    <h5><a href="#">Salman Ahmed</a></h5>
+                                                    <span>29th Jan 2021</span>
+                                                    <a href="#" class="theme-btn minimal-btn"><i class="fal fa-reply"></i>Reply</a>
+                                                </div>
+                                                <div class="comment-text">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam..</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div class="comment-form-wrap mt-40">
+                            <h3>Post Comment</h3>
+    
+                            <form action="#" class="comment-form">
+                                <div class="single-form-input">
+                                    <textarea placeholder="Type your comments...."></textarea>
+                                </div>
+                                <div class="single-form-input">
+                                    <input type="text" placeholder="Type your name....">
+                                </div>
+                                <div class="single-form-input">
+                                    <input type="email" placeholder="Type your email....">
+                                </div>
+                                <div class="single-form-input">
+                                    <input type="text" placeholder="Type your website....">
+                                </div>
+                                <button class="submit-btn" type="submit"><i class="fal fa-comments"></i>Post Comment</button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="main-sidebar">
+                        <div class="single-sidebar-widget">
+                            <div class="wid-title">
+                                <h3>Search</h3>
+                            </div>
+                            <div class="search_widget">
+                                <form action="#">
+                                    <input type="text" placeholder="Search your keyword...">
+                                    <button type="submit"><i class="fal fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="single-sidebar-widget">
+                            <div class="wid-title">
+                                <h3>Popular Feeds</h3>
+                            </div>
+                            <div class="popular-posts">
+                                <div class="single-post-item">
+                                    <div class="thumb bg-cover" style="background-image: url('assets/img/blog/pp1.jpg')"></div>
+                                    <div class="post-content">
+                                        <h5><a href="news-details">Power And Energy Production</a></h5>
+                                        <div class="post-date">
+                                            <i class="far fa-calendar-alt"></i>24th March 2019
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-post-item">
+                                    <div class="thumb bg-cover" style="background-image: url('assets/img/blog/pp2.jpg')"></div>
+                                    <div class="post-content">
+                                        <h5><a href="news-details">Any Kind project Planning</a></h5>
+                                        <div class="post-date">
+                                            <i class="far fa-calendar-alt"></i>25th March 2019
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-post-item">
+                                    <div class="thumb bg-cover" style="background-image: url('assets/img/blog/pp3.jpg')"></div>
+                                    <div class="post-content">
+                                        <h5><a href="news-details">Investing in Freight Broker Training</a></h5>
+                                        <div class="post-date">
+                                            <i class="far fa-calendar-alt"></i>26th March 2019
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-post-item">
+                                    <div class="thumb bg-cover" style="background-image: url('assets/img/blog/pp4.jpg')"></div>
+                                    <div class="post-content">
+                                        <h5><a href="news-details">BUILDING REPAIR & 
+                                            CONSTRUCTION</a></h5>
+                                        <div class="post-date">
+                                            <i class="far fa-calendar-alt"></i>29th March 2019
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-sidebar-widget">
+                            <div class="wid-title">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="widget_categories">
+                                <ul>
+                                    <li><a href="news">Consultant <span>23</span></a></li>
+                                    <li><a href="news">Help <span>24</span></a></li>
+                                    <li><a href="news">transport <span>11</span></a></li>
+                                    <li><a href="news">logitic <span>05</span></a></li>
+                                    <li><a href="news">delivery <span>06</span></a></li>
+                                    <li><a href="news">cargo <span>10</span></a></li>    
+                                </ul>                                
+                            </div>
+                        </div>
+                        <div class="single-sidebar-widget">
+                            <div class="wid-title">
+                                <h3>Never Miss News</h3>
+                            </div>
+                            <div class="social-link">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                        <div class="single-sidebar-widget">
+                            <div class="wid-title">
+                                <h3>Popular Tags</h3>
+                            </div>
+                            <div class="tagcloud">
+                                <a href="news">IT Technology</a>     
+                                <a href="news-details">Web Design</a>
+                                <a href="news-details">Development</a>
+                                <a href="news-details">Solutions</a>
+                                <a href="news-details">Design</a>
+                                <a href="news-details">Programing</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-banner-wrapper">
+        <div class="container">
+            <div class="cta-banner-box section-padding bg-cover" style="background-image: url('assets/img/cta-banner-bg.jpg')">
+                <div class="row align-center">
+                    <div class="col-xl-7 text-center text-xl-start offset-xl-1 offset-xl-1">
+                        <div class="section-title mb-0">
+                            <span>Get A Quote</span>
+                            <h2 class="mb-md-0">Need Any Consultations or <br> Work Next Projects</h2>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 mt-4 mt-xl-0 text-center">
+                        <a href="contact" class="theme-btn">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php include 'include/Footer.php'; ?> 
+
+    <!--  ALl JS Plugins
+    ====================================== -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/modernizr.min.js"></script>
+    <script src="assets/js/jquery.easing.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/imageload.min.js"></script>
+    <script src="assets/js/scrollUp.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/slick-animation.min.js"></script>
+    <script src="assets/js/magnific-popup.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/metismenu.js"></script>
+    <script src="assets/js/nice-select2.js"></script>
+    <script src="assets/js/active.js"></script>
+</body>
+
+</html>

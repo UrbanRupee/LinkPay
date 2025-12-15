@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('payment_requests', function (Blueprint $table) {
+            if (!Schema::hasColumn('payment_requests', 'callback_payload')) {
+                $table->longText('callback_payload')->nullable()->after('callbackurl');
+            }
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('payment_requests', function (Blueprint $table) {
+            if (Schema::hasColumn('payment_requests', 'callback_payload')) {
+                $table->dropColumn('callback_payload');
+            }
+        });
+    }
+};
+
+
+
+

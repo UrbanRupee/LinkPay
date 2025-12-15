@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<?php include 'include/Head.php';?>
+
+    <title>Project Detail - Mother Solution - Mother do all the work</title>
+
+</head>
+
+<body class="body-wrapper">
+<?php include 'include/Preloader.php';?>
+
+<?php include 'include/Header.php';?>
+
+    <div class="page-banner-wrap text-center bg-cover" style="background-image: url('assets/img/page-banner.jpg')">
+        <div class="container">
+            <div class="page-heading text-white">
+                <h1>Project Details</h1>
+            </div>
+            <nav>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index">Home</a></li>
+                  <li class="breadcrumb-item"><a href="projects">Projects</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Project Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <section class="case-study-post-wrapper section-padding">
+        <div class="container">
+            <div class="case-grid-photos">
+                <div class="single-photo-grid">
+                    <img src="assets/img/project/1.jpg" alt="">
+                </div>
+                <div class="single-photo-grid">
+                    <img src="assets/img/project/2.jpg" alt="">
+                </div>
+                <div class="single-photo-grid">
+                    <img src="assets/img/project/3.jpg" alt="">
+                </div>
+                <div class="single-photo-grid">
+                    <img src="assets/img/project/4.jpg" alt="">
+                </div>
+            </div>
+            <div class="case-contents-wrap">
+                <div class="row">
+                    <div class="col-lg-8 col-12">
+                        <div class="case-details-content mr-0 mr-lg-5">
+                            <h2>A Real Store For Digital Solutions</h2>
+                            <p>wquis autem vel eum iure reprehenderit quiin  voluptate velit esse quam nihil molestiae onsequatur, vel illum solorem eum fugiat quo voluptas nulla pariatur laudantium totam  rem aperquae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quiluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepte ursint occaecat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                            <h3>How It Works Benefit For Projects</h3>
+                            <p>On the other hand, we denounce with righteous indignation and dislike men who are beguiled and demoralized by the charms of pleasure of the moment so blinded by desire that they cannot foresee the pain and trouble that are bound to ensue and equals.</p>
+
+                            <ul>
+                                <li>Need To Know To Increase Mobile Checkout Conversions</li>
+                                <li>Improve Your Design Process With Data-Based</li>
+                                <li>Analyzing Your Company’s Social Media Presence With IBM Watson</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <div class="case-info-card">
+                            <div class="case-head bg-cover" style="background-image: url('assets/img/project/case-head.png')">
+                                <h3>Project Details</h3>
+                            </div>
+                            <div class="project-data">
+                                <div class="single-info-item">
+                                    <div class="left-data">
+                                        Clients
+                                    </div>
+                                    <div class="right-data">
+                                        Robert C. Saavedra
+                                    </div>
+                                </div>
+                                <div class="single-info-item">
+                                    <div class="left-data">
+                                        Project
+                                    </div>
+                                    <div class="right-data">
+                                        IT Consulting
+                                    </div>
+                                </div>
+                                <div class="single-info-item">
+                                    <div class="left-data">
+                                        Service
+                                    </div>
+                                    <div class="right-data">
+                                        Digital Solutions
+                                    </div>
+                                </div>
+                                <div class="single-info-item">
+                                    <div class="left-data">
+                                        Category
+                                    </div>
+                                    <div class="right-data">
+                                        IT Services
+                                    </div>
+                                </div>
+                                <div class="single-info-item">
+                                    <div class="left-data">
+                                        Date
+                                    </div>
+                                    <div class="right-data">
+                                        30 Aug 2021
+                                    </div>
+                                </div>
+                                <div class="single-info-item">
+                                    <div class="left-data">
+                                        share
+                                    </div>
+                                    <div class="right-data">
+                                        <div class="social-link">
+                                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                            <a href="#"><i class="fab fa-twitter"></i></a>
+                                            <a href="#"><i class="fab fa-behance"></i></a>
+                                            <a href="#"><i class="fab fa-youtube"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-banner-wrapper">
+        <div class="container">
+            <div class="cta-banner-box section-padding bg-cover" style="background-image: url('assets/img/cta-banner-bg.jpg')">
+                <div class="row align-center">
+                    <div class="col-xl-7 text-center text-xl-start offset-xl-1 offset-xl-1">
+                        <div class="section-title mb-0">
+                            <span>Get A Quote</span>
+                            <h2 class="mb-md-0">Need Any Consultations or <br> Work Next Projects</h2>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 mt-4 mt-xl-0 text-center">
+                        <a href="contact" class="theme-btn">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php include 'include/Footer.php'; ?>
+
+    <!--  ALl JS Plugins
+    ====================================== -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/modernizr.min.js"></script>
+    <script src="assets/js/jquery.easing.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/imageload.min.js"></script>
+    <script src="assets/js/scrollUp.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/slick-animation.min.js"></script>
+    <script src="assets/js/magnific-popup.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/metismenu.js"></script>
+    <script src="assets/js/nice-select2.js"></script>
+    <script src="assets/js/active.js"></script>
+</body>
+</html>

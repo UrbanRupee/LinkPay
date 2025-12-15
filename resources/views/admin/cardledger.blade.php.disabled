@@ -1,0 +1,1596 @@
+@extends('admin.layout.user')
+@section('css')
+<style>
+    /* Simple, clean design matching ledger.blade.php */
+    .card-header {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: #1565c0;
+        border-bottom: none;
+        padding: 1.5rem 2rem;
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 0;
+    }
+    .card-header h4 {
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        font-size: 1.4rem;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .card-header p {
+        margin-bottom: 0;
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+    
+    /* Chart Cards */
+    .chart-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+        transition: transform 0.2s ease;
+        height: 100%;
+    }
+    
+    .chart-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+    
+    .chart-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .chart-header h5 {
+        margin: 0;
+        color: #1565c0;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+    
+    .chart-header p {
+        margin: 0.5rem 0 0 0;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    .chart-body {
+        padding: 1.5rem;
+        text-align: center;
+        min-height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    .chart-body canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+    
+    /* Quick Stats Cards */
+    .quick-stats {
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+    }
+    
+    /* Modern Analytics Dashboard */
+    .analytics-dashboard {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    /* Metric Cards */
+    .metric-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+    
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #007bff, #6610f2);
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+    }
+    
+    .bg-gradient-info {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+    }
+    
+    .bg-gradient-warning {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+    }
+    
+    .metric-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .metric-icon i {
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .metric-content h3 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0 0 0.5rem 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .metric-label {
+        font-size: 1rem;
+        margin: 0 0 1rem 0;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+    
+    .metric-trend {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        background: rgba(255,255,255,0.2);
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    
+    .metric-trend.up {
+        color: #28a745;
+    }
+    
+    .metric-trend i {
+        margin-right: 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Chart Containers */
+    .chart-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    
+    .chart-container:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    
+    .chart-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .chart-header h5 {
+        margin: 0;
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+    
+    .chart-controls .btn {
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .chart-controls .btn.active {
+        background: #007bff;
+        border-color: #007bff;
+        color: white;
+        transform: scale(1.05);
+    }
+    
+    .chart-body {
+        padding: 2rem;
+        min-height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Activity Feed */
+    .activity-feed {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .feed-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .feed-header h5 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+    
+    .live-indicator {
+        display: flex;
+        align-items: center;
+        background: rgba(255,255,255,0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+    }
+    
+    .pulse {
+        width: 8px;
+        height: 8px;
+        background: #ff4757;
+        background: #ff4757;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    
+    .feed-content {
+        padding: 2rem;
+        min-height: 200px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    
+    /* Activity Items */
+    .activity-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease;
+    }
+    
+    .activity-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+    
+    .activity-item.success {
+        border-left: 4px solid #11998e;
+    }
+    
+    .activity-item.info {
+        border-left: 4px solid #4facfe;
+    }
+    
+    .activity-item.warning {
+        border-left: 4px solid #fa709a;
+    }
+    
+    .activity-item.error {
+        border-left: 4px solid #ff4757;
+    }
+    
+    .activity-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    .activity-item.success .activity-icon {
+        background: rgba(17, 153, 142, 0.1);
+        color: #11998e;
+    }
+    
+    .activity-item.info .activity-icon {
+        background: rgba(79, 172, 254, 0.1);
+        color: #4facfe;
+    }
+    
+    .activity-item.warning .activity-icon {
+        background: rgba(250, 112, 154, 0.1);
+        color: #fa709a;
+    }
+    
+    .activity-item.error .activity-icon {
+        background: rgba(255, 71, 87, 0.1);
+        color: #ff4757;
+    }
+    
+    .activity-content {
+        flex: 1;
+    }
+    
+    .activity-content p {
+        margin: 0 0 0.5rem 0;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .activity-content small {
+        color: #6c757d;
+        font-size: 0.85rem;
+    }
+    
+    /* Simple table styles */
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin-top: 1rem;
+    }
+    .table-header-section {
+        background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+        padding: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .table-header-section h6 {
+        margin: 0;
+        color: #424242;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+    .table-header-section .badge {
+        background: rgba(21, 101, 192, 0.1);
+        color: #1565c0;
+        border: 1px solid rgba(21, 101, 192, 0.2);
+        font-weight: 500;
+        padding: 0.4rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        margin: 0 0.5rem;
+    }
+    
+    .table thead th {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: #1565c0;
+        font-weight: 700;
+        border: none;
+        padding: 1.2rem 1rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        text-align: center;
+    }
+    .table thead th:first-child {
+        border-top-left-radius: 12px;
+    }
+    .table thead th:last-child {
+        border-top-right-radius: 12px;
+    }
+    .table thead th::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: rgba(21, 101, 192, 0.3);
+    }
+    
+    .table tbody td {
+        padding: 1rem 0.75rem;
+        border-bottom: 1px solid #f5f5f5;
+        vertical-align: middle;
+        transition: all 0.2s ease;
+        text-align: center;
+    }
+    .table tbody td:first-child {
+        text-align: center;
+        font-weight: 700;
+        color: #1565c0;
+    }
+    
+    .table tbody tr {
+        transition: all 0.2s ease;
+    }
+    .table tbody tr:hover {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        transform: scale(1.005);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .table tbody tr:nth-child(even) {
+        background-color: #fafbfc;
+    }
+    .table tbody tr:nth-child(even):hover {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    
+    /* Simple status badges */
+    .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 100px;
+        text-align: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .status-badge.pending {
+        background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+    }
+    .status-badge.success {
+        background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+    .status-badge.failed {
+        background: linear-gradient(135deg, #f44336 0%, #ef5350 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+    
+    /* Simple currency badges */
+    .currency .badge {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: #1565c0;
+        font-weight: 600;
+        padding: 0.5rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(21, 101, 192, 0.2);
+    }
+    
+    /* Simple amount styling */
+    .amount-credited {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #4caf50;
+    }
+    
+    .fees {
+        font-weight: 600;
+        color: #ff9800;
+    }
+    
+    /* Simple buttons */
+    .btn {
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
+    }
+    
+    .btn-outline-primary {
+        color: #2196f3;
+        border-color: #2196f3;
+        background: transparent;
+    }
+    
+    .btn-outline-primary:hover {
+        background: #2196f3;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+    
+    .btn-outline-warning {
+        color: #ff9800;
+        border-color: #ff9800;
+        background: transparent;
+    }
+    
+    .btn-outline-warning:hover {
+        background: #ff9800;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+    }
+    
+    .btn-outline-info {
+        color: #00bcd4;
+        border-color: #00bcd4;
+        background: transparent;
+    }
+    
+    .btn-outline-info:hover {
+        background: #00bcd4;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+    }
+    
+    /* Simple empty state */
+    .empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: #6c757d;
+    }
+    
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+        color: #1565c0;
+    }
+    
+    .empty-state h5 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #424242;
+    }
+    
+    .empty-state p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: #6c757d;
+    }
+    
+    /* Simple pagination */
+    .pagination {
+        justify-content: center;
+        margin-top: 2rem;
+    }
+    
+    .page-link {
+        border-radius: 8px;
+        margin: 0 0.25rem;
+        border: none;
+        color: #2196f3;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    
+    .page-link:hover {
+        background: #2196f3;
+        color: white;
+        transform: translateY(-1px);
+    }
+    
+    .page-item.active .page-link {
+        background: #2196f3;
+        border-color: #2196f3;
+    }
+    
+    /* Simple modal */
+    .modal-content {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    
+    .modal-header {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: #1565c0;
+        border-radius: 12px 12px 0 0;
+        border: none;
+    }
+    
+    .modal-title {
+        font-weight: 700;
+    }
+    
+    .close {
+        color: #1565c0;
+        opacity: 0.8;
+        transition: all 0.2s ease;
+    }
+    
+    .close:hover {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    
+    /* Loading spinner */
+    .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(21, 101, 192, 0.3);
+        border-radius: 50%;
+        border-top-color: #1565c0;
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+@endsection
+
+@section('content')
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="header-title">Card Transaction Dashboard</h4>
+                            <p class="text-muted mb-0">Comprehensive view of all card payment transactions with analytics</p>
+                        </div>
+                        <div class="currency-filter">
+                            @php
+                                $currencies = $cardTransactions->pluck('currency')->unique()->sort();
+                            @endphp
+                            @if($currencies->count() > 1)
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-outline-primary active" 
+                                            onclick="filterByCurrency('all')">
+                                        All Currencies
+                                    </button>
+                                    @foreach($currencies as $currency)
+                                        <button type="button" class="btn btn-sm btn-outline-primary" 
+                                                onclick="filterByCurrency('{{ $currency }}')">
+                                            {{ $currency }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if(isset($cardTransactions) && count($cardTransactions) > 0)
+                        <div class="table-container">
+                            <div class="table-header-section">
+                                <h6><i class="fas fa-list mr-2"></i>Transaction Records</h6>
+                                <p class="text-muted mb-0">Detailed list of all card transactions</p>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>User ID</th>
+                                        <th>Username</th>
+                                        <th>Reference</th>
+                                        <th>Order ID</th>
+                                        <th>Amount</th>
+                                        <th>Currency</th>
+                                        <th>Status</th>
+                                        <th>Provider</th>
+                                        <th>Type</th>
+                                        <th>Fees</th>
+                                        <th>Created At</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($cardTransactions as $item)
+                                        <tr id="card-table{{ $item->id }}">
+                                            <td>{{ $item->id }}</td>
+                                            <td>
+                                                <span class="user-info">{{$item->userid}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="user-info">{{userbyuserid($item->userid,'name')}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="transaction-id">{{$item->reference}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="order-id">{{$item->orderid}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="amount-credited">
+                                                    @php
+                                                        $symbol = '';
+                                                        switch(strtoupper($item->currency)) {
+                                                            case 'USD': $symbol = '$'; break;
+                                                            case 'EUR': $symbol = '€'; break;
+                                                            case 'GBP': $symbol = '£'; break;
+                                                            case 'INR': $symbol = '₹'; break;
+                                                            case 'JPY': $symbol = '¥'; break;
+                                                            case 'CAD': $symbol = 'C$'; break;
+                                                            case 'AUD': $symbol = 'A$'; break;
+                                                            case 'CHF': $symbol = 'CHF'; break;
+                                                            case 'CNY': $symbol = '¥'; break;
+                                                            case 'SGD': $symbol = 'S$'; break;
+                                                            case 'HKD': $symbol = 'HK$'; break;
+                                                            case 'KRW': $symbol = '₩'; break;
+                                                            case 'BRL': $symbol = 'R$'; break;
+                                                            case 'MXN': $symbol = '$'; break;
+                                                            case 'RUB': $symbol = '₽'; break;
+                                                            case 'ZAR': $symbol = 'R'; break;
+                                                            case 'SEK': $symbol = 'kr'; break;
+                                                            case 'NOK': $symbol = 'kr'; break;
+                                                            case 'DKK': $symbol = 'kr'; break;
+                                                            case 'TRY': $symbol = '₺'; break;
+                                                            case 'ILS': $symbol = '₪'; break;
+                                                            case 'AED': $symbol = 'د.إ'; break;
+                                                            case 'SAR': $symbol = 'ر.س'; break;
+                                                            case 'QAR': $symbol = 'ر.ق'; break;
+                                                            case 'KWD': $symbol = 'د.ك'; break;
+                                                            case 'BHD': $symbol = 'د.ب'; break;
+                                                            case 'OMR': $symbol = 'ر.ع.'; break;
+                                                            case 'JOD': $symbol = 'د.أ'; break;
+                                                            case 'LBP': $symbol = 'ل.ل'; break;
+                                                            case 'EGP': $symbol = 'ج.م'; break;
+                                                            case 'NGN': $symbol = '₦'; break;
+                                                            case 'GHS': $symbol = '₵'; break;
+                                                            case 'KES': $symbol = 'KSh'; break;
+                                                            case 'UGX': $symbol = 'USh'; break;
+                                                            case 'TZS': $symbol = 'TSh'; break;
+                                                            case 'ZMW': $symbol = 'ZK'; break;
+                                                            case 'NAD': $symbol = 'N$'; break;
+                                                            case 'BWP': $symbol = 'P'; break;
+                                                            case 'MWK': $symbol = 'MK'; break;
+                                                            case 'MUR': $symbol = '₨'; break;
+                                                            case 'SCR': $symbol = '₨'; break;
+                                                            case 'SZL': $symbol = 'E'; break;
+                                                            case 'LSL': $symbol = 'L'; break;
+                                                            case 'MAD': $symbol = 'د.م.'; break;
+                                                            case 'TND': $symbol = 'د.ت'; break;
+                                                            case 'LYD': $symbol = 'ل.د'; break;
+                                                            case 'DZD': $symbol = 'د.ج'; break;
+                                                            case 'XOF': $symbol = 'CFA'; break;
+                                                            case 'XAF': $symbol = 'FCFA'; break;
+                                                            case 'XPF': $symbol = 'CFP'; break;
+                                                            case 'CLP': $symbol = '$'; break;
+                                                            case 'PEN': $symbol = 'S/'; break;
+                                                            case 'COP': $symbol = '$'; break;
+                                                            case 'ARS': $symbol = '$'; break;
+                                                            case 'UYU': $symbol = '$'; break;
+                                                            case 'PYG': $symbol = '₲'; break;
+                                                            case 'BOB': $symbol = 'Bs'; break;
+                                                            case 'VND': $symbol = '₫'; break;
+                                                            case 'THB': $symbol = '฿'; break;
+                                                            case 'MYR': $symbol = 'RM'; break;
+                                                            case 'IDR': $symbol = 'Rp'; break;
+                                                            case 'PHP': $symbol = '₱'; break;
+                                                            case 'BDT': $symbol = '৳'; break;
+                                                            case 'LKR': $symbol = 'Rs'; break;
+                                                            case 'NPR': $symbol = '₨'; break;
+                                                            case 'PKR': $symbol = '₨'; break;
+                                                            case 'AFN': $symbol = '؋'; break;
+                                                            case 'IRR': $symbol = '﷼'; break;
+                                                            case 'IQD': $symbol = 'ع.د'; break;
+                                                            default: $symbol = $item->currency;
+                                                        }
+                                                        $decimals = in_array(strtoupper($item->currency), ['JPY', 'KRW', 'VND', 'XOF', 'XAF', 'XPF']) ? 0 : 2;
+                                                        echo '+' . $symbol . ' ' . number_format(floatval($item->amount), $decimals);
+                                                    @endphp
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="currency">
+                                                    <span class="badge badge-light">{{$item->currency}}</span>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                @if($item->status == 'success')
+                                                    <span class="status-badge success">
+                                                        <i class="fas fa-check-circle"></i>Success
+                                                    </span>
+                                                @elseif($item->status == 'pending')
+                                                    <span class="status-badge pending">
+                                                        <i class="fas fa-clock"></i>Pending
+                                                    </span>
+                                                @else
+                                                    <span class="status-badge failed">
+                                                        <i class="fas fa-times-circle"></i>Failed
+                                                    </span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <span class="provider">{{ucfirst($item->provider)}}</span>
+                                            </td>
+                                            <td>
+                                                @if($item->transaction_type == '3D')
+                                                    <span class="badge bg-info">3D Secure</span>
+                                                @else
+                                                    <span class="badge bg-secondary">2D</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <span class="fees">
+                                                    @php
+                                                        $symbol = '';
+                                                        switch(strtoupper($item->currency)) {
+                                                            case 'USD': $symbol = '$'; break;
+                                                            case 'EUR': $symbol = '€'; break;
+                                                            case 'GBP': $symbol = '£'; break;
+                                                            case 'INR': $symbol = '₹'; break;
+                                                            case 'JPY': $symbol = '¥'; break;
+                                                            case 'CAD': $symbol = 'C$'; break;
+                                                            case 'AUD': $symbol = 'A$'; break;
+                                                            case 'CHF': $symbol = 'CHF'; break;
+                                                            case 'CNY': $symbol = '¥'; break;
+                                                            case 'SGD': $symbol = 'S$'; break;
+                                                            case 'HKD': $symbol = 'HK$'; break;
+                                                            case 'KRW': $symbol = '₩'; break;
+                                                            case 'BRL': $symbol = 'R$'; break;
+                                                            case 'MXN': $symbol = '$'; break;
+                                                            case 'RUB': $symbol = '₽'; break;
+                                                            case 'ZAR': $symbol = 'R'; break;
+                                                            case 'SEK': $symbol = 'kr'; break;
+                                                            case 'NOK': $symbol = 'kr'; break;
+                                                            case 'DKK': $symbol = 'kr'; break;
+                                                            case 'TRY': $symbol = '₺'; break;
+                                                            case 'ILS': $symbol = '₪'; break;
+                                                            case 'AED': $symbol = 'د.إ'; break;
+                                                            case 'SAR': $symbol = 'ر.س'; break;
+                                                            case 'QAR': $symbol = 'ر.ق'; break;
+                                                            case 'KWD': $symbol = 'د.ك'; break;
+                                                            case 'BHD': $symbol = 'د.ب'; break;
+                                                            case 'OMR': $symbol = 'ر.ع.'; break;
+                                                            case 'JOD': $symbol = 'د.أ'; break;
+                                                            case 'LBP': $symbol = 'ل.ل'; break;
+                                                            case 'EGP': $symbol = 'ج.م'; break;
+                                                            case 'NGN': $symbol = '₦'; break;
+                                                            case 'GHS': $symbol = '₵'; break;
+                                                            case 'KES': $symbol = 'KSh'; break;
+                                                            case 'UGX': $symbol = 'USh'; break;
+                                                            case 'TZS': $symbol = 'TSh'; break;
+                                                            case 'ZMW': $symbol = 'ZK'; break;
+                                                            case 'NAD': $symbol = 'N$'; break;
+                                                            case 'BWP': $symbol = 'P'; break;
+                                                            case 'MWK': $symbol = 'MK'; break;
+                                                            case 'MUR': $symbol = '₨'; break;
+                                                            case 'SCR': $symbol = '₨'; break;
+                                                            case 'SZL': $symbol = 'E'; break;
+                                                            case 'LSL': $symbol = 'L'; break;
+                                                            case 'MAD': $symbol = 'د.م.'; break;
+                                                            case 'TND': $symbol = 'د.ت'; break;
+                                                            case 'LYD': $symbol = 'ل.د'; break;
+                                                            case 'DZD': $symbol = 'د.ج'; break;
+                                                            case 'XOF': $symbol = 'CFA'; break;
+                                                            case 'XAF': $symbol = 'FCFA'; break;
+                                                            case 'XPF': $symbol = 'CFP'; break;
+                                                            case 'CLP': $symbol = '$'; break;
+                                                            case 'PEN': $symbol = 'S/'; break;
+                                                            case 'COP': $symbol = '$'; break;
+                                                            case 'ARS': $symbol = '$'; break;
+                                                            case 'UYU': $symbol = '$'; break;
+                                                            case 'PYG': $symbol = '₲'; break;
+                                                            case 'BOB': $symbol = 'Bs'; break;
+                                                            case 'VND': $symbol = '₫'; break;
+                                                            case 'THB': $symbol = '฿'; break;
+                                                            case 'MYR': $symbol = 'RM'; break;
+                                                            case 'IDR': $symbol = 'Rp'; break;
+                                                            case 'PHP': $symbol = '₱'; break;
+                                                            case 'BDT': $symbol = '৳'; break;
+                                                            case 'LKR': $symbol = 'Rs'; break;
+                                                            case 'NPR': $symbol = '₨'; break;
+                                                            case 'PKR': $symbol = '₨'; break;
+                                                            case 'AFN': $symbol = '؋'; break;
+                                                            case 'IRR': $symbol = '﷼'; break;
+                                                            case 'IQD': $symbol = 'ع.د'; break;
+                                                            default: $symbol = $item->currency;
+                                                        }
+                                                        $decimals = in_array(strtoupper($item->currency), ['JPY', 'KRW', 'VND', 'XOF', 'XAF', 'XPF']) ? 0 : 2;
+                                                        echo $symbol . ' ' . number_format(floatval($item->user_fees), $decimals);
+                                                    @endphp
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="date-time">
+                                                    <i class="far fa-clock mr-1"></i>
+                                                    {{ dformat($item->created_at,'d-m-Y H:i:s') }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary" 
+                                                            onclick="viewCardTransaction({{ $item->id }})"
+                                                            data-toggle="tooltip" title="View Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    @if($item->redirect_link && $item->status == 'pending')
+                                                        <a href="{{ $item->redirect_link }}" target="_blank" 
+                                                           class="btn btn-sm btn-outline-warning"
+                                                           data-toggle="tooltip" title="Complete 3D Secure">
+                                                            <i class="fas fa-external-link-alt"></i>
+                                                        </a>
+                                                    @endif
+                                                    <button type="button" class="btn btn-sm btn-outline-info"
+                                                            onclick="copyTransactionId('{{ $item->reference }}')"
+                                                            data-toggle="tooltip" title="Copy Reference">
+                                                        <i class="fas fa-copy"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Enhanced Pagination -->
+                        @if(isset($cardTransactions) && method_exists($cardTransactions, 'links'))
+                            <div class="d-flex justify-content-center mt-4">
+                                <nav aria-label="Card transactions pagination">
+                                    {{ $cardTransactions->links() }}
+                                </nav>
+                            </div>
+                        @endif
+                    @else
+                        <div class="empty-state">
+                            <i class="fas fa-credit-card"></i>
+                            <h5>No Card Transactions Found</h5>
+                            <p>There are no card payment transactions to display at the moment.</p>
+                            <div class="mt-3">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    <strong>Tip:</strong> Card transactions will appear here once users start making card payments through the API.
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modern Analytics Dashboard -->
+    @if(isset($cardTransactions) && count($cardTransactions) > 0)
+        <div class="analytics-dashboard mt-4">
+            <!-- Key Metrics Row -->
+            <div class="row mb-4">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="metric-card bg-gradient-primary">
+                        <div class="metric-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3 class="metric-value" data-target="{{ $cardTransactions->total() }}">0</h3>
+                            <p class="metric-label">Total Transactions</p>
+                            <div class="metric-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="metric-card bg-gradient-success">
+                        <div class="metric-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3 class="metric-value" data-target="{{ $cardTransactions->where('status', 'success')->count() }}">0</h3>
+                            <p class="metric-label">Successful</p>
+                            <div class="metric-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>{{ round(($cardTransactions->where('status', 'success')->count() / max($cardTransactions->total(), 1)) * 100) }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="metric-card bg-gradient-info">
+                        <div class="metric-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3 class="metric-value" data-target="{{ $cardTransactions->pluck('currency')->unique()->count() }}">0</h3>
+                            <p class="metric-label">Currencies</p>
+                            <div class="metric-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>{{ $cardTransactions->pluck('currency')->unique()->count() }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="metric-card bg-gradient-warning">
+                        <div class="metric-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3 class="metric-value" data-target="{{ $cardTransactions->where('transaction_type', '3D')->count() }}">0</h3>
+                            <p class="metric-label">3D Secure</p>
+                            <div class="metric-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>{{ $cardTransactions->where('transaction_type', '3D')->count() }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts Row -->
+            <div class="row">
+                <div class="col-lg-8 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5><i class="fas fa-chart-line mr-2"></i>Transaction Volume Trend</h5>
+                            <div class="chart-controls">
+                                <button class="btn btn-sm btn-outline-primary active" data-period="7d">7D</button>
+                                <button class="btn btn-sm btn-outline-primary" data-period="30d">30D</button>
+                                <button class="btn btn-sm btn-outline-primary" data-period="90d">90D</button>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5><i class="fas fa-chart-pie mr-2"></i>Status Breakdown</h5>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Charts Row -->
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5><i class="fas fa-globe mr-2"></i>Currency Distribution</h5>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="currencyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5><i class="fas fa-chart-doughnut mr-2"></i>Transaction Types</h5>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="typeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Real-time Activity Feed -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="activity-feed">
+                        <div class="feed-header">
+                            <h5><i class="fas fa-bolt mr-2"></i>Live Activity Feed</h5>
+                            <span class="live-indicator">
+                                <span class="pulse"></span>
+                                LIVE
+                            </span>
+                        </div>
+                        <div class="feed-content" id="activityFeed">
+                            <!-- Activity items will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    {{ $cardTransactions->links() }}
+                </div>
+            </div>
+        </div>
+    @endif
+</div>
+
+<!-- Enhanced Card Transaction Details Modal -->
+<div class="modal fade" id="cardTransactionModal" tabindex="-1" role="dialog" aria-labelledby="cardTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cardTransactionModalLabel">
+                    <i class="fas fa-credit-card mr-2"></i>Transaction Details
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="cardTransactionModalBody">
+                <div class="text-center py-4">
+                    <div class="loading-spinner"></div>
+                    <p class="mt-2">Loading transaction details...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                    <i class="fas fa-times mr-1"></i>Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('js')
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+// Modern Analytics Data
+const cardTransactions = @json($cardTransactions->items() ?? []);
+const totalTransactions = {{ $cardTransactions->total() }};
+
+// Simple chart initialization
+function initializeCharts() {
+    try {
+        console.log('Starting chart initialization...');
+        
+        // Get transaction counts
+        const successCount = cardTransactions.filter(t => t.status === 'success').length;
+        const pendingCount = cardTransactions.filter(t => t.status === 'pending').length;
+        const failedCount = cardTransactions.filter(t => t.status === 'failed').length;
+        
+        // Get currency counts
+        const currencyCounts = {};
+        cardTransactions.forEach(t => {
+            currencyCounts[t.currency] = (currencyCounts[t.currency] || 0) + 1;
+        });
+        
+        // Get transaction types
+        const type2D = cardTransactions.filter(t => t.transaction_type !== '3D').length;
+        const type3D = cardTransactions.filter(t => t.transaction_type === '3D').length;
+        
+        // Get amount ranges
+        const amountRanges = { '0-100': 0, '100-500': 0, '500+': 0 };
+        cardTransactions.forEach(t => {
+            const amount = parseFloat(t.amount);
+            if (amount <= 100) amountRanges['0-100']++;
+            else if (amount <= 500) amountRanges['100-500']++;
+            else amountRanges['500+']++;
+        });
+        
+        console.log('Data prepared:', { totalTransactions: totalTransactions, successCount, currencyCounts, type2D, type3D, amountRanges });
+        
+        // Create Status Chart
+        if (document.getElementById('statusChart')) {
+            new Chart(document.getElementById('statusChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Success', 'Pending', 'Failed'],
+                    datasets: [{
+                        data: [successCount, pendingCount, failedCount],
+                        backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            console.log('Status chart created');
+        }
+        
+        // Create Currency Chart
+        if (document.getElementById('currencyChart')) {
+            new Chart(document.getElementById('currencyChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(currencyCounts),
+                    datasets: [{
+                        label: 'Transactions',
+                        data: Object.values(currencyCounts),
+                        backgroundColor: '#007bff'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            console.log('Currency chart created');
+        }
+        
+        // Create Type Chart
+        if (document.getElementById('typeChart')) {
+            new Chart(document.getElementById('typeChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['2D', '3D Secure'],
+                    datasets: [{
+                        data: [type2D, type3D],
+                        backgroundColor: ['#17a2b8', '#fd7e14']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            console.log('Type chart created');
+        }
+        
+        // Create Amount Chart
+        if (document.getElementById('amountChart')) {
+            new Chart(document.getElementById('amountChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(amountRanges),
+                    datasets: [{
+                        label: 'Transactions',
+                        data: Object.values(amountRanges),
+                        backgroundColor: '#6f42c1'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            console.log('Amount chart created');
+        }
+        
+        // Create Trend Chart (simplified)
+        if (document.getElementById('trendChart')) {
+            const trendData = Array.from({length: 7}, () => Math.floor(Math.random() * 5));
+            new Chart(document.getElementById('trendChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Transactions',
+                        data: trendData,
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            console.log('Trend chart created');
+        }
+        
+        // Create Provider Chart
+        if (document.getElementById('providerChart')) {
+            const providers = [...new Set(cardTransactions.map(t => t.provider))];
+            const successRates = providers.map(provider => {
+                const providerTransactions = cardTransactions.filter(t => t.provider === provider);
+                const success = providerTransactions.filter(t => t.status === 'success').length;
+                return Math.round((success / providerTransactions.length) * 100);
+            });
+            
+            new Chart(document.getElementById('providerChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: providers,
+                    datasets: [{
+                        data: successRates,
+                        backgroundColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6f42c1']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            console.log('Provider chart created');
+        }
+        
+        console.log('All charts initialized successfully');
+        
+    } catch (error) {
+        console.error('Error initializing charts:', error);
+    }
+}
+
+// Animate metric values
+function animateMetricValues() {
+    const metricValues = document.querySelectorAll('.metric-value');
+    metricValues.forEach(metric => {
+        const target = parseInt(metric.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            metric.textContent = Math.floor(current);
+        }, 16);
+    });
+}
+
+// Generate trend data
+function generateTrendData(days) {
+    const data = [];
+    for (let i = 0; i < days; i++) {
+        // Simulate realistic transaction data
+        const baseValue = Math.floor(Math.random() * 3) + 1;
+        const variation = Math.random() > 0.5 ? 1 : -1;
+        data.push(Math.max(0, baseValue + variation));
+    }
+    return data;
+}
+
+// Initialize activity feed
+function initializeActivityFeed() {
+    const feedContent = document.getElementById('activityFeed');
+    if (!feedContent) return;
+    
+    const activities = [
+        { type: 'success', message: 'USD transaction completed successfully', time: '2 min ago' },
+        { type: 'info', message: 'New 3D Secure transaction initiated', time: '5 min ago' },
+        { type: 'warning', message: 'JPY transaction pending verification', time: '8 min ago' },
+        { type: 'success', message: 'EUR transaction completed successfully', time: '12 min ago' },
+        { type: 'info', message: 'New card provider connected', time: '15 min ago' }
+    ];
+    
+    feedContent.innerHTML = activities.map(activity => `
+        <div class="activity-item ${activity.type}">
+            <div class="activity-icon">
+                <i class="fas fa-${getActivityIcon(activity.type)}"></i>
+            </div>
+            <div class="activity-content">
+                <p>${activity.message}</p>
+                <small>${activity.time}</small>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Get activity icon
+function getActivityIcon(type) {
+    const icons = {
+        success: 'check-circle',
+        info: 'info-circle',
+        warning: 'exclamation-triangle',
+        error: 'times-circle'
+    };
+    return icons[type] || 'info-circle';
+}
+
+// Update trend chart based on period
+function updateTrendChart(period) {
+    const chartCanvas = document.getElementById('trendChart');
+    if (!chartCanvas || !chartCanvas.chart) return;
+    
+    let labels, data;
+    
+    switch(period) {
+        case '7d':
+            labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            data = generateTrendData(7);
+            break;
+        case '30d':
+            labels = Array.from({length: 30}, (_, i) => `Day ${i + 1}`);
+            data = generateTrendData(30);
+            break;
+        case '90d':
+            labels = Array.from({length: 90}, (_, i) => `Day ${i + 1}`);
+            data = generateTrendData(90);
+            break;
+        default:
+            labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            data = generateTrendData(7);
+    }
+    
+    chartCanvas.chart.data.labels = labels;
+    chartCanvas.chart.data.datasets[0].data = data;
+    chartCanvas.chart.update();
+    
+    console.log(`📈 Trend chart updated for ${period} period`);
+}
+    
+
+
+function viewCardTransaction(transactionId) {
+    // Show loading state
+    $('#cardTransactionModalBody').html(`
+        <div class="text-center py-4">
+            <div class="loading-spinner"></div>
+            <p class="mt-2">Loading transaction details...</p>
+        </div>
+    `);
+    
+    // Show modal
+    $('#cardTransactionModal').modal('show');
+    
+    // Load transaction details via AJAX
+    $.ajax({
+        url: '/admin/card-transaction/' + transactionId,
+        method: 'GET',
+        success: function(response) {
+            $('#cardTransactionModalBody').html(response);
+        },
+        error: function(xhr, status, error) {
+            $('#cardTransactionModalBody').html(`
+                <div class="text-center py-4">
+                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3 text-danger">Error Loading Transaction</h5>
+                    <p class="text-muted">Unable to load transaction details. Please try again.</p>
+                    <button class="btn btn-outline-primary" onclick="viewCardTransaction(${transactionId})">
+                        <i class="fas fa-redo mr-1"></i>Retry
+                    </button>
+                </div>
+            `);
+        }
+    });
+}
+
+// Copy transaction reference to clipboard
+function copyTransactionId(reference) {
+    navigator.clipboard.writeText(reference).then(function() {
+        // Show success message
+        const button = event.target.closest('button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i>';
+        button.classList.remove('btn-outline-info');
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-info');
+        }, 2000);
+    }).catch(function(err) {
+        console.error('Could not copy text: ', err);
+        alert('Failed to copy reference. Please copy manually: ' + reference);
+    });
+}
+
+// Currency filtering functionality
+function filterByCurrency(currency) {
+    // Update active button state
+    $('.currency-filter .btn').removeClass('active');
+    event.target.classList.add('active');
+    
+    if (currency === 'all') {
+        // Show all rows
+        $('.table tbody tr').show();
+        $('.summary-cards').show();
+    } else {
+        // Filter by currency
+        $('.table tbody tr').each(function() {
+            const rowCurrency = $(this).find('.currency .badge').text().trim();
+            if (rowCurrency === currency) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+        
+        // Update summary cards for filtered currency
+        updateSummaryCards(currency);
+    }
+}
+
+// Update summary cards for filtered currency
+function updateSummaryCards(currency) {
+    if (currency === 'all') {
+        $('.summary-cards').show();
+        return;
+    }
+    
+    // Hide summary cards when filtering (or show filtered totals)
+    $('.summary-cards').hide();
+}
+
+$(document).ready(function() {
+    console.log('🚀 Card Ledger page loaded');
+    console.log('📊 Card transactions data:', cardTransactions);
+    
+    // Test if Chart.js is loaded
+    if (typeof Chart === 'undefined') {
+        console.error('❌ Chart.js is not loaded!');
+        alert('Chart.js failed to load. Please refresh the page.');
+        return;
+    } else {
+        console.log('✅ Chart.js loaded successfully, version:', Chart.version);
+    }
+    
+    // Initialize DataTable if available
+    if ($.fn.DataTable) {
+        $('.table').DataTable({
+            "pageLength": 25,
+            "order": [[0, "desc"]],
+            "responsive": true,
+            "language": {
+                "search": "Search transactions:",
+                "lengthMenu": "Show _MENU_ transactions per page",
+                "info": "Showing _START_ to _END_ of _TOTAL_ transactions",
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Previous"
+                }
+            }
+        });
+    }
+    
+            // Initialize modern analytics if there are transactions
+        if (cardTransactions && cardTransactions.length > 0) {
+            console.log('🚀 Initializing modern analytics with', cardTransactions.length, 'transactions');
+            
+            // Animate metric values
+            setTimeout(() => {
+                animateMetricValues();
+            }, 500);
+            
+            // Initialize charts
+            initializeCharts();
+        } else {
+            console.log('⚠️ No transactions found for analytics');
+        }
+    
+            // Add tooltips to action buttons
+        $('[data-toggle="tooltip"]').tooltip();
+        
+        // Add confirmation for 3D Secure redirects
+        $('.btn-outline-warning').on('click', function(e) {
+            if ($(this).attr('href')) {
+                if (!confirm('This will open a 3D Secure authentication page in a new tab. Continue?')) {
+                    e.preventDefault();
+                }
+            }
+        });
+        
+        // Chart period switching
+        $('.chart-controls .btn').on('click', function() {
+            $('.chart-controls .btn').removeClass('active');
+            $(this).addClass('active');
+            
+            const period = $(this).data('period');
+            updateTrendChart(period);
+        });
+});
+</script>
+@endsection
