@@ -212,25 +212,20 @@
                 </div>
                 <div class="card-body"> {{-- Using .card-body for Bootstrap 4 consistency --}}
 
+                    {{-- Summary cards (Last settlement only) --}}
                     <div class="summary-row">
-                        <div class="summary-card total">
-                            <h6>Total Amount</h6>
-                            <div class="amount">₹{{ number_format($totals['gross'] ?? 0, 2) }}</div>
+                        <div class="summary-card net">
+                            <h6>Last Settlement Amount</h6>
+                            <div class="amount">₹{{ number_format($lastTotals['settled'] ?? 0, 2) }}</div>
                         </div>
                         <div class="summary-card tax">
-                            <h6>Service Charge</h6>
-                            <div class="amount">₹{{ number_format($totals['tax'] ?? 0, 2) }}</div>
+                            <h6>Last Service Charge</h6>
+                            <div class="amount">₹{{ number_format($lastTotals['tax'] ?? 0, 2) }}</div>
                         </div>
-                        <div class="summary-card net">
-                            <h6>Settled Amount</h6>
-                            <div class="amount">₹{{ number_format($totals['settled'] ?? 0, 2) }}</div>
-                        </div>
-                        @if(isset($totalHold) && $totalHold > 0)
                         <div class="summary-card" style="background: linear-gradient(135deg, #d4a574, #e6c9a0); color: #333;">
-                            <h6>Total Hold Amount</h6>
-                            <div class="amount">₹{{ number_format($totalHold, 2) }}</div>
+                            <h6>Last Hold Amount</h6>
+                            <div class="amount">₹{{ number_format($lastTotals['hold'] ?? 0, 2) }}</div>
                         </div>
-                        @endif
                     </div>
 
                     {{-- Filter Form (Date & Search) --}}

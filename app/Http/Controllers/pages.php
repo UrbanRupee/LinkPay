@@ -1146,6 +1146,7 @@ private function formatStatus($status) {
             });
         }
 
+        // Overall totals (for header summary)
         $totalsRow = (clone $baseQuery)
             ->selectRaw('COALESCE(SUM(COALESCE(amount, 0)), 0) as net_total')
             ->selectRaw('COALESCE(SUM(COALESCE(data4, 0)), 0) as tax_total')
@@ -1157,6 +1158,28 @@ private function formatStatus($status) {
             'tax' => round((float) ($totalsRow->tax_total ?? 0), 2),
             'settled' => round((float) ($totalsRow->net_total ?? 0), 2),
         ];
+
+        // Last settlement only (for header summary)
+        $lastSettlement = (clone $baseQuery)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if ($lastSettlement) {
+            $lastTax = (float) ($lastSettlement->data4 ?? 0);
+            $lastHold = (float) ($lastSettlement->data5 ?? 0);
+            $lastSettled = (float) ($lastSettlement->amount ?? 0);
+            $lastTotals = [
+                'settled' => round($lastSettled, 2),
+                'tax' => round($lastTax, 2),
+                'hold' => round($lastHold, 2),
+            ];
+        } else {
+            $lastTotals = [
+                'settled' => 0,
+                'tax' => 0,
+                'hold' => 0,
+            ];
+        }
 
         $list = (clone $baseQuery)
             ->orderBy('id', 'desc')
@@ -1183,7 +1206,7 @@ private function formatStatus($status) {
         $filters = array_filter($request->only(['from_date', 'to_date', 'search']));
         $exportUrl = route('user.export.settlement_report', $filters);
 
-        return view('user.settlement_report', compact('list', 'title', 'totals', 'exportUrl', 'holdList', 'totalHold'));
+        return view('user.settlement_report', compact('list', 'title', 'exportUrl', 'holdList', 'totalHold', 'totals', 'lastTotals'));
     }
     
     public function settlement_invoice($id)
@@ -2940,6 +2963,88 @@ $todayDate = date('Y-m-d')." 00:00:00";
         }
         
         return view('admin.settlement_list', compact('data', 'title', 'from_date', 'to_date', 'userid_filter', 'utr_filter', 'totalCount', 'todayCount'));
+    }
+    
+    public function admin_export_settlement_list(Request $request)
+    {
+        // Use the same query logic as admin_settlementlist
+        $query = Transaction::where('category','settlement');
+        
+        // Date filter - use whereDate for date-only comparison (timezone-safe)
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+        
+        if ($from_date) {
+            $query->whereDate('created_at', '>=', Carbon::parse($from_date)->format('Y-m-d'));
+        }
+        if ($to_date) {
+            $query->whereDate('created_at', '<=', Carbon::parse($to_date)->format('Y-m-d'));
+        }
+        
+        // User ID filter
+        $userid_filter = $request->input('userid_filter');
+        if ($userid_filter) {
+            $query->where('userid', 'like', '%' . $userid_filter . '%');
+        }
+        
+        // UTR filter
+        $utr_filter = $request->input('utr_filter');
+        if ($utr_filter) {
+            $query->where('data2', 'like', '%' . $utr_filter . '%');
+        }
+        
+        $data = $query->orderBy('id','desc')->get();
+        
+        $rowNumber = 0;
+        return $this->exportToExcel($data, 'Settlement_List_Export_' . date('Y-m-d'), [
+            '#',
+            'User ID',
+            'UTR No.',
+            'Gross Amount',
+            'Service Charge',
+            'Paid Amount',
+            'Hold Amount',
+            'Description',
+            'Created At',
+            'Bank Name',
+            'Account No',
+            'IFSC Code'
+        ], function ($item) use (&$rowNumber) {
+            $rowNumber++;
+            
+            // Calculate amounts same way as in the view
+            $taxAmount = (float) ($item->data4 ?? 0);
+            $holdAmount = (float) ($item->data5 ?? 0);
+            $settledAmount = (float) ($item->amount ?? 0);
+            
+            $grossAmountWithoutTax = (float) ($item->data3 ?? 0);
+            if ($grossAmountWithoutTax == 0) {
+                $grossAmountWithoutTax = $settledAmount + $taxAmount + $holdAmount;
+            }
+            
+            $totalGross = $grossAmountWithoutTax + $taxAmount;
+            
+            // Get bank details
+            $bankDetails = \App\Models\User_Bank::where('userid', $item->userid)->first();
+            $bankName = $bankDetails ? ($bankDetails->bank_name ?? '') : '';
+            $accountNo = $bankDetails ? ($bankDetails->account_no ?? '') : '';
+            $ifscCode = $bankDetails ? ($bankDetails->ifsc_code ?? '') : '';
+            
+            return [
+                $rowNumber,
+                $item->userid ?? '',
+                $item->data2 ?? '',
+                number_format($totalGross, 2, '.', ''),
+                number_format($taxAmount, 2, '.', ''),
+                number_format($settledAmount, 2, '.', ''),
+                number_format($holdAmount, 2, '.', ''),
+                $item->data1 ?? '',
+                $item->created_at ? $item->created_at->format('d-m-Y H:i:s') : '',
+                $bankName,
+                $accountNo,
+                $ifscCode
+            ];
+        });
     }
     
     public function admin_hold_ledger()

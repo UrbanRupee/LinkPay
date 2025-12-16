@@ -24,7 +24,7 @@
                                     </small>
                                 @endif
                             </div>
-                            <a href="{{ route('admin.export.settlements') }}" class="btn btn-primary btn-sm">
+                            <a href="{{ route('admin.export.settlement_list', request()->all()) }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-file-export me-1"></i>Export CSV
                             </a>
                         </div>

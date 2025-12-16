@@ -127,6 +127,7 @@ Route::middleware(['isAdmin'])->group(function () {
     Route::get('/admin/club_report', [pages::class, "admin_club_report"]);
     Route::get('/admin/providers', [pages::class, "admin_providers"]);
     Route::get('/admin/settlement/export', [pages::class, "admin_export_settlements"])->name('admin.export.settlements');
+    Route::get('/admin/settlement_list/export', [pages::class, "admin_export_settlement_list"])->name('admin.export.settlement_list');
     
     // Provider API Routes
     Route::get('/admin/api/providers/list', [pages::class, "admin_providers_list"]);
