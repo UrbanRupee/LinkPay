@@ -71,6 +71,20 @@ Route::get('/test-dashboard-data', function () {
     ]);
 });
 
+// UrbanPay Frontend Example - Serve HTML file
+Route::get('/urbanpay-frontend-example.html', function () {
+    $filePath = public_path('urbanpay-frontend-example.html');
+    if (file_exists($filePath)) {
+        return response()->file($filePath, ['Content-Type' => 'text/html']);
+    }
+    // Fallback: read and return HTML content if file doesn't exist yet
+    $htmlContent = file_get_contents(base_path('public/urbanpay-frontend-example.html'));
+    if ($htmlContent) {
+        return response($htmlContent, 200)->header('Content-Type', 'text/html');
+    }
+    return response('File not found. Please deploy urbanpay-frontend-example.html to public directory.', 404);
+});
+
 Route::middleware(['isUser'])->group(function () {
     Route::get('/dashboard', [pages::class, "user_dashboard"]);
     Route::get('/profile', [pages::class, "user_profile"]);
