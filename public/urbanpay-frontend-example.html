@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanPay/Dhankubera Payment - Frontend Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💳 UrbanPay/Dhankubera Payment</h1>
+        <p class="subtitle">Frontend integration example</p>
+
+        <form id="paymentForm" onsubmit="handlePayment(event)">
+            <div class="form-group">
+                <label>Amount (₹):</label>
+                <input type="number" id="amount" value="100" min="1" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label>Mobile Number:</label>
+                <input type="tel" id="mobile" placeholder="9112345678" maxlength="10" required>
+            </div>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" id="name" placeholder="Customer Name" required>
+            </div>
+            <div class="form-group">
+                <label>Order ID:</label>
+                <input type="text" id="orderid" placeholder="dhankuberaPayin00001234" required>
+            </div>
+            <div class="form-group">
+                <label>API Token:</label>
+                <input type="text" id="token" placeholder="Your API token" required>
+            </div>
+            <div class="form-group">
+                <label>User ID:</label>
+                <input type="text" id="userid" placeholder="Your User ID" required>
+            </div>
+            <div class="form-group">
+                <label>Callback URL:</label>
+                <input type="url" id="callback_url" placeholder="https://yourdomain.com/callback" required>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="qr_required"> Generate QR Code
+                </label>
+            </div>
+            <button type="submit" id="payButton">
+                💳 Initiate Payment
+            </button>
+        </form>
+
+        <div id="status" class="status"></div>
+
+        <div class="code-block">
+            <strong>Frontend Code:</strong>
+            <pre><code>// Simple JavaScript function
+async function initiatePayment() {
+    const response = await fetch('/api/pg/urbanpay/initiate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            token: 'YOUR_TOKEN',
+            userid: 'YOUR_USER_ID',
+            amount: '100',
+            mobile: '9112345678',
+            name: 'Customer Name',
+            orderid: 'dhankuberaPayin00001234',
+            callback_url: 'https://YOURDOMAIN.COM/callback'
+        })
+    });
+    
+    const data = await response.json();
+    
+    if (data.status && data.url) {
+        // Redirect to payment URL
+        window.location.href = data.url;
+    }
+}</code></pre>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://merchant.dhankubera.com/api/pg/urbanpay';
+
+        async function handlePayment(event) {
+            event.preventDefault();
+            
+            const payButton = document.getElementById('payButton');
+            const statusDiv = document.getElementById('status');
+            
+            // Get form values
+            const amount = document.getElementById('amount').value;
+            const mobile = document.getElementById('mobile').value;
+            const name = document.getElementById('name').value;
+            const orderid = document.getElementById('orderid').value;
+            const token = document.getElementById('token').value;
+            const userid = document.getElementById('userid').value;
+            const callbackUrl = document.getElementById('callback_url').value;
+            const qrRequired = document.getElementById('qr_required').checked;
+
+            // Validation
+            if (!token || !userid || !callbackUrl) {
+                statusDiv.className = 'status error';
+                statusDiv.style.display = 'block';
+                statusDiv.textContent = '❌ Please fill in Token, User ID, and Callback URL';
+                return;
+            }
+
+            // Show loading
+            payButton.disabled = true;
+            payButton.innerHTML = '<span class="loading"></span> Processing...';
+            statusDiv.style.display = 'none';
+
+            try {
+                // Call backend API
+                const response = await fetch(`${API_BASE}/initiate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: token,
+                        userid: userid,
+                        amount: amount,
+                        mobile: mobile,
+                        name: name,
+                        orderid: orderid,
+                        callback_url: callbackUrl,
+                        qr_required: qrRequired
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.status && data.url) {
+                    // Success - show URL and redirect
+                    statusDiv.className = 'status success';
+                    statusDiv.style.display = 'block';
+                    
+                    let redirectDelay = 2000; // Default 2 seconds
+                    if (data.redirect_immediately) {
+                        redirectDelay = 500; // Redirect faster if immediate redirect required
+                    }
+                    
+                    statusDiv.innerHTML = `✅ Payment Link Generated!<br><br>` +
+                        `🔗 URL: <a href="${data.url}" target="_blank">${data.url}</a><br>` +
+                        `💰 Amount: ₹${data.amount}<br>` +
+                        (data.tax ? `💰 Tax: ₹${data.tax}<br>` : '') +
+                        (data.short_link ? `🔗 Short Link: ${data.short_link}<br>` : '') +
+                        (data.qr_code ? `📱 QR Code Available<br>` : '') +
+                        (data.redirect_immediately ? `<br>⚠️ Redirecting immediately (URL expires quickly)...` : `<br>Redirecting in ${redirectDelay/1000} seconds...`);
+
+                    // Auto-redirect
+                    setTimeout(() => {
+                        window.location.href = data.url;
+                    }, redirectDelay);
+                } else {
+                    // Error
+                    payButton.disabled = false;
+                    payButton.innerHTML = '💳 Initiate Payment';
+                    statusDiv.className = 'status error';
+                    statusDiv.style.display = 'block';
+                    statusDiv.textContent = '❌ Error: ' + (data.message || 'Payment initiation failed');
+                }
+            } catch (error) {
+                payButton.disabled = false;
+                payButton.innerHTML = '💳 Initiate Payment';
+                statusDiv.className = 'status error';
+                statusDiv.style.display = 'block';
+                statusDiv.textContent = '❌ Error: ' + error.message;
+            }
+        }
+
+        // Auto-fill default values on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Generate random order ID
+            document.getElementById('orderid').value = 'dhankuberaPayin' + Date.now().toString().slice(-10);
+            
+            // Set default callback URL (can be overridden)
+            if (!document.getElementById('callback_url').value) {
+                document.getElementById('callback_url').value = window.location.origin + '/payin/callback';
+            }
+            
+            // Check URL parameters for token and userid (for testing)
+            const urlParams = new URLSearchParams(window.location.search);
+            const tokenParam = urlParams.get('token');
+            const useridParam = urlParams.get('userid');
+            
+            if (tokenParam) {
+                document.getElementById('token').value = tokenParam;
+            }
+            if (useridParam) {
+                document.getElementById('userid').value = useridParam;
+            }
+        });
+    </script>
+</body>
+</html>
