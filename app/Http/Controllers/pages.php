@@ -3641,11 +3641,76 @@ $todayDate = date('Y-m-d')." 00:00:00";
         $amount = $request->get('amount');
         $reason = $request->get('reason', 'Payment failed');
         
+        // Try to find transaction to get user's redirect URL
+        // Priority: User's configured redirect > Query param redirect > null
+        // This matches the logic in payment_success()
+        $redirectTarget = null;
+        $transaction = null;
+        $merchantRedirect = null;
+        
+        if ($txnId) {
+            $transaction = Payment_request::where('transaction_id', $txnId)
+                ->orWhere('data1', $txnId)
+                ->first();
+            
+            if ($transaction) {
+                $user = user::where('userid', $transaction->userid)->first();
+                $merchantRedirect = $user && !empty($user->payin_success_redirect)
+                    ? trim($user->payin_success_redirect)
+                    : null;
+                
+                // Prioritize merchant's configured redirect over query param (same as payment_success)
+                if (!empty($merchantRedirect)) {
+                    $redirectTarget = $merchantRedirect;
+                    \Log::info('Payment Failed: Using merchant redirect from database', [
+                        'txnId' => $txnId,
+                        'userid' => $transaction->userid,
+                        'redirect' => $merchantRedirect
+                    ]);
+                } else {
+                    // Fallback to query param if merchant redirect not configured
+                    $redirectTarget = trim((string) $request->get('redirect', ''));
+                    if ($redirectTarget === '') {
+                        $redirectTarget = null;
+                    }
+                    \Log::info('Payment Failed: No merchant redirect, using query param', [
+                        'txnId' => $txnId,
+                        'userid' => $transaction->userid,
+                        'user_found' => $user !== null,
+                        'redirect_configured' => $user && !empty($user->payin_success_redirect),
+                        'redirect_from_query' => $request->get('redirect'),
+                        'redirect_target' => $redirectTarget
+                    ]);
+                }
+            } else {
+                // No transaction found, use query param
+                $redirectTarget = trim((string) $request->get('redirect', ''));
+                if ($redirectTarget === '') {
+                    $redirectTarget = null;
+                }
+                \Log::info('Payment Failed: Transaction not found', [
+                    'txnId' => $txnId,
+                    'redirect_from_query' => $request->get('redirect'),
+                    'redirect_target' => $redirectTarget
+                ]);
+            }
+        } else {
+            // No txnId, use query param
+            $redirectTarget = trim((string) $request->get('redirect', ''));
+            if ($redirectTarget === '') {
+                $redirectTarget = null;
+            }
+            \Log::info('Payment Failed: No txnId provided', [
+                'redirect_from_query' => $request->get('redirect'),
+                'redirect_target' => $redirectTarget
+            ]);
+        }
+        
         return view('Gateway.PaymentFailed', [
             'txnId' => $txnId,
             'amount' => $amount,
             'reason' => $reason,
-            'redirectUrl' => $request->get('redirect')
+            'redirectUrl' => $redirectTarget
         ]);
     }
     
