@@ -24,7 +24,7 @@
                                     </small>
                                 @endif
                             </div>
-                            <a href="{{ route('admin.export.settlement_list', request()->all()) }}" class="btn btn-primary btn-sm">
+                            <a href="{{ url('/admin/settlement_list/export') . (count(request()->all()) ? '?' . http_build_query(request()->all()) : '') }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-file-export me-1"></i>Export CSV
                             </a>
                         </div>
