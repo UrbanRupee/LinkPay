@@ -2,8 +2,9 @@
 
 $flag = false;
 $sessionId = "";
-$api_id = 'REPLACED_APP_ID';
-$secret = 'REPLACED_SECRET';
+// Set CASHFREE_APP_ID and CASHFREE_SECRET in .env or server environment
+$api_id = getenv('CASHFREE_APP_ID') ?: '';
+$secret = getenv('CASHFREE_SECRET') ?: '';
 $order_id = isset($_GET['trn']) ? $_GET['trn'] : "ijhuygj5hkjbhg864544413684";
 $amount = isset($_GET['am']) ? $_GET['am'] : 1;
 // $amount = 1;
